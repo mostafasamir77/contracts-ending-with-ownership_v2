@@ -1,0 +1,61 @@
+<odoo>
+
+
+    <record id="other_charge_list_view" model="ir.ui.view" >
+        <field name="name">Other Charge List</field>
+        <field name="model">other.charge.lines</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="contract_id" />
+                <field name="product"/>
+                <field name="date"/>
+                <field name="amount" sum="amount"/>
+                <field name="paid" sum="paid"/>
+                <field name="remaining" sum="remaining"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="other_charge_form_view" model="ir.ui.view" >
+        <field name="name">Other Charge Form</field>
+        <field name="model">other.charge.lines</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="contract_id"/>
+                        <h1>
+                            <field name="contract_id" readonly="1" options="{'no_create': True, 'no_open': True}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="General Info">
+                            <field name="product" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                        </group>
+                        <group string="Finance Info">
+                            <field name="amount" readonly="1"/>
+                            <field name="paid" readonly="1"/>
+                            <field name="remaining" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="other_charge_action" model="ir.actions.act_window">
+        <field name="name">Other Charge</field>
+        <field name="res_model">other.charge.lines</field>
+        <field name="view_mode">list,form</field>
+<!--        <field name="context">{'delete': False'}</field>-->
+    </record>
+
+
+    <menuitem id="other_charge_menu" name="Other Charge" parent="reports_base_menu" action="other_charge_action"/>
+</odoo>

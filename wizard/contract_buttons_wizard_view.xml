@@ -1,0 +1,568 @@
+<odoo>
+
+<!-- Start of cancel button  -->
+    <record id="cancel_button_wizard_form" model="ir.ui.view">
+        <field name="name">cancel button form</field>
+        <field name="model">cancel.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="contract_wizard_id" invisible="1"/>
+
+                    <field name="reason"/>
+
+                </group>
+                <h3 style="color: red;" class="p-3">Note: Are you sure you want to cancel this contract ?</h3>
+                <footer>
+                    <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="cancel_button_wizard_action" model="ir.actions.act_window">
+        <field name="name">cancel button</field>
+        <field name="res_model">cancel.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+ <!-- End of cancel button  -->
+
+
+<!-- Start of confirm button  -->
+
+    <record id="confirm_button_wizard_form" model="ir.ui.view">
+        <field name="name">confirm button form</field>
+        <field name="model">confirm.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="contract_wizard_id" invisible="1"/>
+
+                </group>
+                <h3 style="color: red;" class="p-3">Note: Are you sure you want to Confirm this contract ?</h3>
+                <footer>
+                    <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="confirm_button_wizard_action" model="ir.actions.act_window">
+        <field name="name">confirm button</field>
+        <field name="res_model">confirm.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+ <!-- End of confirm button  -->
+
+
+
+
+<!-- Start of pickup button  -->
+
+    <record id="pickup_button_wizard_form" model="ir.ui.view">
+        <field name="name">pickup button form</field>
+        <field name="model">pickup.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="contract_wizard_id" invisible="1"/>
+
+                    <field name="km_out"/>
+                    <field name="fuel_out"/>
+
+                    <notebook>
+                        <page string="Check Out">
+                            <group>
+                                <group>
+                                    <field name="ac_out"/>
+                                    <field name="radio_stereo_out"/>
+                                    <field name="screen_out"/>
+                                    <field name="spere_time_out"/>
+                                    <field name="tires_out"/>
+                                </group>
+                                <group>
+                                    <field name="spere_tires_out"/>
+                                    <field name="keys_out"/>
+                                    <field name="car_seats_out"/>
+                                    <field name="fire_extinguisher_out"/>
+                                    <field name="first_aid_kit_out"/>
+                                    <field name="vehicle_status_out"/>
+                                </group>
+                                <group colspan="2">
+                                    <div class="o_field_widget o_field_image mt-4">
+                                        <div class="row g-2">
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_1"/>
+                                                <field name="image_1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_2"/>
+                                                <field name="image_2" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_3"/>
+                                                <field name="image_3" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_4"/>
+                                                <field name="image_4" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_5"/>
+                                                <field name="image_5" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_6"/>
+                                                <field name="image_6" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_7"/>
+                                                <field name="image_7" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_8"/>
+                                                <field name="image_8" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_9"/>
+                                                <field name="image_9" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_10"/>
+                                                <field name="image_10" widget="image" nolabel="1"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </group>
+                <footer>
+                    <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="pickup_button_wizard_action" model="ir.actions.act_window">
+        <field name="name">confirm button</field>
+        <field name="res_model">pickup.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+ <!-- End of pickup button  -->
+
+
+
+<!-- Start of return button  -->
+
+    <record id="return_button_wizard_form" model="ir.ui.view">
+        <field name="name">return button form</field>
+        <field name="model">return.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="contract_wizard_id" invisible="1"/>
+
+                    <field name="km_in"/>
+                    <field name="fuel_in"/>
+
+                    <notebook>
+                        <page string="Check In">
+                            <group>
+                                <group>
+                                    <field name="ac_in"/>
+                                    <field name="radio_stereo_in"/>
+                                    <field name="screen_in"/>
+                                    <field name="spere_time_in"/>
+                                    <field name="tires_in"/>
+                                </group>
+                                <group>
+                                    <field name="spere_tires_in"/>
+                                    <field name="keys_in"/>
+                                    <field name="car_seats_in"/>
+                                    <field name="fire_extinguisher_in"/>
+                                    <field name="first_aid_kit_in"/>
+                                    <field name="vehicle_status_in"/>
+                                </group>
+                                <group colspan="2">
+                                    <div class="o_field_widget o_field_image mt-4">
+                                        <div class="row g-2">
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+<!--                                                <label for="image_1_in"/>-->
+                                                <field name="image_1_in" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+<!--                                                <label for="image_2"/>-->
+                                                <field name="image_2_in" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+<!--                                                <label for="image_3"/>-->
+                                                <field name="image_3_in" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+<!--                                                <label for="image_4"/>-->
+                                                <field name="image_4_in" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+<!--                                                <label for="image_5"/>-->
+                                                <field name="image_5_in" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+<!--                                                <label for="image_6"/>-->
+                                                <field name="image_6_in" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+<!--                                                <label for="image_7"/>-->
+                                                <field name="image_7_in" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+<!--                                                <label for="image_8"/>-->
+                                                <field name="image_8_in" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+<!--                                                <label for="image_9"/>-->
+                                                <field name="image_9_in" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+<!--                                                <label for="image_10"/>-->
+                                                <field name="image_10_in" widget="image" nolabel="1"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </group>
+                <footer>
+                    <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="return_button_wizard_action" model="ir.actions.act_window">
+        <field name="name">return button</field>
+        <field name="res_model">return.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+ <!-- End of pickup button  -->
+
+
+
+
+ <!-- Start of withdraw button  -->
+
+    <record id="withdraw_button_wizard_form" model="ir.ui.view">
+        <field name="name">withdraw button form</field>
+        <field name="model">withdraw.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="contract_wizard_id" invisible="1"/>
+                </group>
+                <h3 style="color: red;" class="p-3">Note: Are you sure you want to Withdraw ?</h3>
+                <footer>
+                    <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="withdraw_button_wizard_action" model="ir.actions.act_window">
+        <field name="name">withdraw button</field>
+        <field name="res_model">withdraw.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+
+
+ <!-- End of withdraw button  -->
+
+
+
+ <!-- Start of other charge button  -->
+
+
+    <record id="other_charge_button_wizard_form" model="ir.ui.view">
+        <field name="name">other charge button form</field>
+        <field name="model">other.charge.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="contract_wizard_id" invisible="1"/>
+
+                        <field name="product"/>
+                        <field name="price"/>
+                    </group>
+                    <group>
+                        <field name="date"/>
+                        <field name="duration"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="other_charge_button_wizard_action" model="ir.actions.act_window">
+        <field name="name">other charge button</field>
+        <field name="res_model">other.charge.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+ <!-- End of other charge button  -->
+
+
+
+
+ <!-- Start of collect advance amount button  -->
+
+
+    <record id="collect_advance_amount_wizard_form" model="ir.ui.view">
+        <field name="name">collect advance amount form</field>
+        <field name="model">collect.advance.amount.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="contract_wizard_id" invisible="1"/>
+
+                        <field name="journal" options="{'no_create': True}"/>
+                        <field name="date"/>
+                    </group>
+                    <group>
+                        <field name="amount"/>
+                        <field name="pyment_method" options="{'no_create': True}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Pay" type="object" name="action_pay" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="collect_advance_amount_wizard_action" model="ir.actions.act_window">
+        <field name="name">Collect Advance Amount</field>
+        <field name="res_model">collect.advance.amount.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+ <!-- End of collect advance amount button  -->
+
+
+ <!-- start of add statement button  -->
+
+    <record id="add_statement_wizard_form" model="ir.ui.view">
+        <field name="name">Add Statement</field>
+        <field name="model">add.statement.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="statement_type"/>
+                        <field name="statement_status" invisible="(call_status != 'answered') or (statement_type != 'phone')"/>
+                    </group>
+                    <group>
+                        <field name="call_status" invisible="statement_type != 'phone'"/>
+                        <field name="payment_date" invisible="(statement_status != 'pledge_to_payment') or (call_status != 'answered') or (statement_type != 'phone')"/>
+                    </group>
+                    <group>
+                        <field name="details"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Add Statement" type="object" name="action_add_statement" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="add_statement_wizard_action" model="ir.actions.act_window">
+        <field name="name">Add Statement</field>
+        <field name="res_model">add.statement.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+ <!-- End of add statement button  -->
+
+
+
+
+ <!-- start of close contract button  -->
+
+    <record id="close_contract_wizard_form" model="ir.ui.view">
+        <field name="name">Close Contract</field>
+        <field name="model">close.contract.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="close_date"/>
+                </group>
+                <footer>
+                    <button string="Confirm" type="object" name="action_close_contract" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="close_contract_wizard_action" model="ir.actions.act_window">
+        <field name="name">Close Contract</field>
+        <field name="res_model">close.contract.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+ <!-- End of close contract button  -->
+
+
+ <!-- start of register payment button  -->
+
+    <record id="register_payment_wizard_form" model="ir.ui.view">
+        <field name="name">Register Payment</field>
+        <field name="model">register.payment.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="journal_id"/>
+                        <field name="amount"/>
+                    </group>
+                    <group>
+                        <field name="date"/>
+                        <field name="payment_method_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Confirm" type="object" name="action_register_payment" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="register_payment_wizard_action" model="ir.actions.act_window">
+        <field name="name">Register Payment</field>
+        <field name="res_model">register.payment.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+ <!-- End of register payment button  -->
+
+
+
+
+ <!-- start of pay other charge button  -->
+
+    <record id="pay_other_charge_wizard_form" model="ir.ui.view">
+        <field name="name">Pay Other Charge</field>
+        <field name="model">pay.other.charge.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="journal_id"/>
+                        <field name="amount"/>
+                    </group>
+                    <group>
+                        <field name="date"/>
+                        <field name="payment_method_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Confirm" type="object" name="action_pay_other_charge" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="pay_other_charge_wizard_action" model="ir.actions.act_window">
+        <field name="name">Pay Other Charge</field>
+        <field name="res_model">pay.other.charge.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+ <!-- End of pay other charge button  -->
+
+
+
+<!-- start of pay other charge button  -->
+
+    <record id="edit_payment_wizard_form" model="ir.ui.view">
+        <field name="name">edit payment form</field>
+        <field name="model">edit.payment.button</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="payment_id"/>
+                    </group>
+                    <group>
+                        <field name="reason"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="New Register Payment">
+                        <group>
+                            <group>
+                                <field name="journal_id"/>
+                                <field name="amount"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="payment_method_id"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+                <footer>
+                    <button string="Edit" type="object" name="action_edit_payment" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="edit_payment_wizard_action" model="ir.actions.act_window">
+        <field name="name">Edit Payment</field>
+        <field name="res_model">edit.payment.button</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+ <!-- End of pay other charge button  -->
+</odoo>

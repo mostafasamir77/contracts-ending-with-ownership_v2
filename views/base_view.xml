@@ -1,0 +1,6 @@
+<odoo>
+    <menuitem id="contract_ending_with_ownership_menu" name="Contract Ending With Ownership"  web_icon="contracts_ending_with_ownership,static/description/car-icon-vehicle.png"/>
+    <menuitem id="contract_base_menu" name="Contract" parent="contract_ending_with_ownership_menu"/>
+    <menuitem id="reports_base_menu" name="Reports" parent="contract_ending_with_ownership_menu"/>
+
+</odoo>

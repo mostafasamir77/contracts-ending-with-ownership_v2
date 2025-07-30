@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="action_open_records_payment" model="ir.actions.act_window">
+        <field name="name">Payments</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_mode">list,form</field>
+<!--        <field name="context">{'delete': False'}</field>-->
+        <field name="domain">[('is_contract_payment', '=', True)]</field>
+        <field name="context">{}</field>
+
+    </record>
+
+    <menuitem id="payments_menu" name="Payments" parent="contract_base_menu" action="action_open_records_payment"/>
+</odoo>

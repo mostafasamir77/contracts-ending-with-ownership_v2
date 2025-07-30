@@ -1,0 +1,46 @@
+<odoo>
+
+    <record id="res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">view res partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//notebook" position="before">
+                <group string="ADDITIONAL INFORMATION">
+                    <group>
+                        <field name="age" invisible="not is_leassing_customer"/>
+                        <field name="birth" invisible="not is_leassing_customer"/>
+                        <field name="city" invisible="not is_leassing_customer"/>
+                        <field name="id_expiry" invisible="not is_leassing_customer"/>
+                        <field name="remaining_id_expiry" invisible="not is_leassing_customer"/>
+                        <field name="is_leassing_customer"/>
+                    </group>
+                    <group>
+                        <field name="license_expiry_date" invisible="not is_leassing_customer"/>
+                        <field name="remaining_license_expiry_date" invisible="not is_leassing_customer"/>
+                        <field name="license_number" invisible="not is_leassing_customer"/>
+                        <field name="mobile" invisible="not is_leassing_customer"/>
+                        <field name="national_identity_number" invisible="not is_leassing_customer"/>
+                        <field name="nationality" invisible="not is_leassing_customer"/>
+
+                        <field name="id_attachment" invisible="not is_leassing_customer"/>
+                        <field name="license_attachment" invisible="not is_leassing_customer"/>
+
+                    </group>
+                </group>
+            </xpath>
+<!--            <xpath expr="//group[1][2]" position="inside">-->
+<!--                <group string="ADDITIONAL INFORMATION">-->
+<!--                    <field name="id_version_num" invisible="not is_leassing_customer"/>-->
+<!--                    <field name="license_expiry_date" invisible="not is_leassing_customer"/>-->
+<!--                    <field name="license_number" invisible="not is_leassing_customer"/>-->
+<!--                    <field name="mobile" invisible="not is_leassing_customer"/>-->
+<!--                    <field name="national_identity_number" invisible="not is_leassing_customer"/>-->
+<!--                    <field name="nationality" invisible="not is_leassing_customer"/>-->
+<!--                    <field name="is_leassing_customer"/>-->
+<!--                </group>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+</odoo>

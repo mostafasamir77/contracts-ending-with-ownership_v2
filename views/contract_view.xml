@@ -1,0 +1,408 @@
+<odoo>
+
+    <record id="contract_list" model="ir.ui.view">
+        <field name="name">contract list</field>
+        <field name="model">contract</field>
+        <field name="arch" type="xml">
+            <list class="header_custom" decoration-bf="states == 'closed'" decoration-danger="states == 'cancelled'" decoration-muted="states == 'draft'">
+                <field name="name" />
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <field name="contract_date"/>
+                <field name="total_amount" sum="advance_amount_value"/>
+                <field name="total_paid_amount" sum="total_paid_amount"/>
+                <field name="total_remaining" sum="total_remaining"/>
+<!--                <field name="delivery_state"/>-->
+                <field name="states"/>
+                <field name="delivery_state" widget="badge" decoration-success="delivery_state == 'picked'" decoration-danger="delivery_state == 'not_picked'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="contract_form" model="ir.ui.view">
+        <field name="name">contract form</field>
+        <field name="model">contract</field>
+        <field name="arch" type="xml">
+            <form>
+               <header>
+                   <button name="action_confirm" type="object" class="btn-primary" string="Confirm"  invisible="states != 'draft'"/>
+                   <button name="action_cancel" type="object" class="btn-primary" string="Cancel"  invisible="states != 'draft'"/>
+                   <button name="action_collect_advance_amount" type="object" class="btn-primary" string="Collect Advance Amount" invisible="advance_amount_value_compute == paid_advance_amount" />
+
+                   <button name="action_other_charge" type="object" class="btn-primary" string="Other Charge" invisible="states == 'draft'" />
+
+                   <button name="action_pickup" type="object" class="btn-primary" string="Pickup"  invisible="not (states == 'open' and delivery_state == 'not_picked')"/>
+                   <button name="action_return" type="object" class="btn-primary" string="Return"  invisible="states != 'withdraw_inprogress'"/>
+
+                   <button name="action_withdraw" type="object" class="btn-primary" string="Withdraw"  invisible="not (states == 'open' and delivery_state == 'picked')"/>
+                   <button name="action_reopen" type="object" class="btn-primary" string="Reopen" invisible="states not in ('withdraw_inprogress', 'delivered_pending' )" />
+                   <button name="action_add_statement" type="object" class="btn-primary" string="Add Statement" invisible="states == 'draft'"/>
+                   <button name="close_contract_statement" type="object" class="btn-primary" string="Close Contract" invisible="not (states == 'delivered_pending')"/>
+
+                   <button name="register_payment_button" type="object" class="btn-primary" string="Register Payment" invisible="not installment_lines_ids or states == 'draft' or total_remaining == 0"/>
+
+
+                   <button name="pay_other_charge_button" type="object" class="btn-primary" string="Pay Other Charge" invisible="not other_charge_lines_ids"/>
+
+                   <button name="edit_payment_button" type="object" class="btn-primary" string="Edit Payment"/>
+
+
+<!--                   <button name="test_button" type="object" class="btn-primary" string="test"/>-->
+
+                   <field name="states" widget="statusbar" options="{'clickable': 1}" />
+                </header>
+                <sheet>
+                    <field name="delivery_state" style="position:absolute;right:30px;top:30px;" class="float-right" widget="badge" decoration-danger="delivery_state == 'not_picked'" decoration-success="delivery_state == 'picked'"/>
+
+                   <div name="button_box" class="oe_button_box">
+                       <button name="action_open_stock_picking" type="object" class="oe_stat_button" icon="fa-dropbox" invisible="stock_picking_count == 0">
+                            <field name="stock_picking_count" widget="statinfo" string="stock picking"/>
+                       </button>
+
+                       <button name="action_open_invoice" type="object" class="oe_stat_button" icon="fa-money" invisible="invoices_count == 0">
+                            <field name="invoices_count" widget="statinfo" string="Invoice"/>
+                       </button>
+
+
+                       <button name="action_open_payments" type="object" class="oe_stat_button" icon="fa-align-justify" invisible="count_payments == 0">
+                            <field name="count_payments" widget="statinfo" string="Payment"/>
+                       </button>
+
+                   </div>
+
+
+
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="license_plate"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Customer details">
+
+                            <group>
+                                <group string="Customer Information">
+                                    <field name="customer_id" readonly="states != 'draft'"/>
+                                    <field name="national_identity_number" />
+                                    <field name="mobile" />
+                                </group>
+                                <group string="Additional Information">
+                                    <field name="license_number"/>
+                                    <field name="city"/>
+                                </group>
+                            </group>
+                            <notebook>
+                                <page string="Guarantors">
+                                    <field name="guarantors_ids" readonly="states != 'draft'">
+                                        <list editable="bottom">
+                                            <field name="name" />
+                                            <field name="phone" />
+                                            <field name="id_number" />
+                                            <field name="expire_date_id" />
+                                            <field name="note" />
+                                        </list>
+                                    </field>
+                                </page>
+                            </notebook>
+
+                        </page>
+
+
+                        <page string="Vehicle Information" >
+                            <group>
+                                <group>
+                                    <field name="vehicle_id" readonly="states != 'draft'"/>
+                                    <field name="license_plate" />
+                                    <field name="picup_branch" readonly="states != 'draft'"/>
+                                </group>
+                                <group>
+                                    <field name="category_id" />
+                                    <field name="model_id" />
+                                </group>
+                            </group>
+
+                        </page>
+                        <page string="Financial Information" >
+                            <group>
+                                <group>
+                                    <field name="contract_date" readonly="states != 'draft'"/>
+                                    <field name="vehicle_price" readonly="states != 'draft'"/>
+                                    <field name="installment_number" readonly="states != 'draft'"/>
+
+                                </group>
+                                <group>
+                                    <field name="first_installment_date" readonly="states != 'draft'"/>
+                                    <div class="o_row">
+                                        <label for="advance_amount_type" string="advance amount"/>
+                                        <field name="advance_amount_type" readonly="states != 'draft'"/>
+                                        <field name="advance_amount_value" readonly="states != 'draft'"/>
+                                    </div>
+                                    <field name="paid_advance_amount" />
+                                    <field name="installment_value" />
+                                </group>
+                            </group>
+                            <notebook>
+                                <page string="Installment" >
+                                    <field name="installment_lines_ids">
+                                        <list editable="bottom" create="0" delete="0">
+                                            <field name="date" readonly="1"/>
+                                            <field name="name" readonly="1"/>
+                                            <field name="amount" readonly="1"/>
+                                            <field name="paid_amount" readonly="1"/>
+                                            <field name="remaining_amount"/>
+                                            <field name="payment_state" readonly="1"/>
+                                            <field name="state" readonly="1"/>
+                                        </list>
+                                    </field>
+                                    <group>
+                                        <group>
+
+                                        </group>
+                                        <group>
+                                            <group>
+
+                                            </group>
+                                            <group>
+                                                <field name="total_amount"/>
+                                                <field name="total_paid_amount"/>
+                                                <field name="total_remaining"/>
+                                                <field name="current_due_amount"/>
+                                                <field name="total_other_charge"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </page>
+                            </notebook>
+                        </page>
+
+                        <page string="Check Out" invisible="is_clickd_pickup == False">
+
+                            <group >
+                                <group>
+                                    <field name="ac_out" readonly="1"/>
+                                    <field name="radio_stereo_out" readonly="1"/>
+                                    <field name="screen_out" readonly="1"/>
+                                    <field name="spere_time_out" readonly="1"/>
+                                    <field name="tires_out" readonly="1"/>
+                                    <field name="km_out" readonly="1"/>
+                                    <field name="fuel_out" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="spere_tires_out" readonly="1"/>
+                                    <field name="keys_out" readonly="1"/>
+                                    <field name="car_seats_out" readonly="1"/>
+                                    <field name="fire_extinguisher_out" readonly="1"/>
+                                    <field name="first_aid_kit_out" readonly="1"/>
+                                    <field name="vehicle_status_out" readonly="1"/>
+                                </group>
+                                <group colspan="2">
+                                    <div class="o_field_widget o_field_image mt-4">
+                                        <div class="row g-2">
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_1"/>
+                                                <field name="image_1" widget="image" readonly="1" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_2"/>
+                                                <field name="image_2" widget="image" readonly="1" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_3"/>
+                                                <field name="image_3" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_4"/>
+                                                <field name="image_4" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_5"/>
+                                                <field name="image_5" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_6"/>
+                                                <field name="image_6" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_7"/>
+                                                <field name="image_7" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_8"/>
+                                                <field name="image_8" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_9"/>
+                                                <field name="image_9" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_10"/>
+                                                <field name="image_10" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Check In" invisible="is_clickd_return == False">
+                            <group >
+                                <group>
+                                    <field name="ac_in" readonly="1"/>
+                                    <field name="radio_stereo_in" readonly="1"/>
+                                    <field name="screen_in" readonly="1"/>
+                                    <field name="spere_time_in" readonly="1"/>
+                                    <field name="tires_in" readonly="1"/>
+                                    <field name="km_in" readonly="1"/>
+                                    <field name="fuel_in" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="spere_tires_in" readonly="1"/>
+                                    <field name="keys_in" readonly="1"/>
+                                    <field name="car_seats_in" readonly="1"/>
+                                    <field name="fire_extinguisher_in" readonly="1"/>
+                                    <field name="first_aid_kit_in" readonly="1"/>
+                                    <field name="vehicle_status_in" readonly="1"/>
+                                </group>
+                                <group colspan="2">
+                                    <div class="o_field_widget o_field_image mt-4">
+                                        <div class="row g-2">
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_1"/>
+                                                <field name="image_1_in" widget="image" readonly="1" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_2"/>
+                                                <field name="image_2_in" widget="image" readonly="1" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_3"/>
+                                                <field name="image_3_in" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_4"/>
+                                                <field name="image_4_in" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_5"/>
+                                                <field name="image_5_in" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_6"/>
+                                                <field name="image_6_in" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_7"/>
+                                                <field name="image_7_in" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_8"/>
+                                                <field name="image_8_in" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_9"/>
+                                                <field name="image_9_in" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+                                                <label for="image_10"/>
+                                                <field name="image_10_in" readonly="1" widget="image" nolabel="1"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Other Charge" invisible="not is_clicked_other_charge">
+                            <field name="other_charge_lines_ids">
+                                <list editable="bottom" create="0" delete="0">
+                                    <field name="date"/>
+                                    <field name="product"/>
+                                    <field name="amount"/>
+                                    <field name="paid"/>
+                                    <field name="remaining"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+
+
+                        <page string="Statement" invisible="not statement_ids">
+                            <field name="statement_ids">
+                                <list editable="bottom" create="0" delete="0">
+                                    <field name="statement"/>
+                                    <field name="create_uid"/>
+                                    <field name="create_date"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="contract_action" model="ir.actions.act_window">
+        <field name="name">Contract</field>
+        <field name="res_model">contract</field>
+        <field name="view_mode">list,form</field>
+<!--        <field name="context">{'delete': False'}</field>-->
+    </record>
+
+
+
+    <record id="contract_search_view" model="ir.ui.view">
+        <field name="name">contract search view</field>
+        <field name="model">contract</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <field name="contract_date"/>
+                <field name="total_amount"/>
+                <field name="total_paid_amount"/>
+                <field name="total_remaining" />
+                <field name="states"/>
+                <field name="delivery_state"/>
+
+                <filter name="group_vehicle" string="Vehicle" context="{'group_by' : 'vehicle_id'}"/>
+                <filter name="group_delivery_state" string="Delivery State" context="{'group_by' : 'delivery_state'}"/>
+                <filter name="group_states" string="Contract State" context="{'group_by' : 'states'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="check_payment_date_automated_action" model="ir.cron">
+        <field name="name">installment lines: check payment date automated action</field>
+        <field name="model_id" ref="model_installment_lines"/>
+        <field name="state">code</field>
+        <field name="code">model.check_payment_date()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="check_payment_date_automated_action_for_statement" model="ir.cron">
+        <field name="name">statement lines: check payment date automated action</field>
+        <field name="model_id" ref="model_statement_lines"/>
+        <field name="state">code</field>
+        <field name="code">model.automated_action_check_payment_date()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
+
+    <menuitem id="contract_menu" name="Contract" parent="contract_base_menu" action="contract_action"/>
+
+</odoo>

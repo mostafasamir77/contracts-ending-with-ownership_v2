@@ -1,0 +1,5 @@
+.header_custom table thead > tr > th {
+    background-color: #c4c4c4 !important;
+    text-align: center;
+}
+

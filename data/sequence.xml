@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record id="contract_sequence" model="ir.sequence">
+            <field name="name">contract seq.</field>
+            <field name="code">contract_seq</field>
+            <field name="prefix">Contract/</field>
+            <field name="padding">6</field>
+        </record>
+    </data>
+</odoo>

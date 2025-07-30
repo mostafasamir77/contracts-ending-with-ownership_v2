@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_contracts" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.contracts</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="20"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="contract" id="contract" string="Contracts Ending With Ownership" name="contract" >
+                        <block title="Contract Management" id="contract_setting">
+                            <setting string="Advance Product">
+                                <div class="text-muted content-group mt16">
+                                    <span>Set Product</span>
+                                    <field name="advance_product" class="text-center" style="width: 80%; min-width: 4rem;"/>
+                                </div>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+
+
+
+

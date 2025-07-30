@@ -1,0 +1,12 @@
+<odoo>
+
+    <record id="action_open_records_is_leassing_customer" model="ir.actions.act_window">
+        <field name="name">Customer</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+<!--        <field name="context">{'delete': False'}</field>-->
+        <field name="domain">[('is_leassing_customer','=', True)]</field>
+    </record>
+
+    <menuitem id="customer_menu" name="Customer" parent="contract_base_menu" action="action_open_records_is_leassing_customer"/>
+</odoo>

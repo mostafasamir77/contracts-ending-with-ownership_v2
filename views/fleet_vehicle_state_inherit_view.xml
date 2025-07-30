@@ -1,0 +1,18 @@
+<odoo>
+
+    <record id="fleet_vehicle_state_list_inherit" model="ir.ui.view">
+        <field name="name">vehicle state</field>
+        <field name="model">fleet.vehicle.state</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_state_view_tree"/>
+        <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="after">
+
+            <field name="is_rented"/>
+            <field name="is_ready"/>
+            <field name="is_requested_for_withdraw"/>
+
+        </xpath>
+        </field>
+    </record>
+
+</odoo>
