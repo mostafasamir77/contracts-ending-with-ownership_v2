@@ -1,5 +1,7 @@
 # from email.policy import default
 from email.policy import default
+from os.path import exists
+
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields, models, api
@@ -694,6 +696,9 @@ class RegisterPayment(models.TransientModel):
         # Create the payment
         payments = payment_wizard.action_create_payments()
 
+
+        self.contract_wizard_id.installment_lines_ids.payment_ids = [(4, invoice.matched_payment_ids.id)]
+
     def _get_payment_method_line(self, journal_id):
         """Get the payment method line for inbound payments for the specified journal"""
         payment_method_line = self.env['account.payment.method.line'].search([
@@ -885,5 +890,7 @@ class EditPayment(models.TransientModel):
     reason = fields.Text(required=True)
 
     def action_edit_payment(self):
-        self.payment_id.unlink()
-
+        import logging
+        _logger = logging.getLogger(__name__)
+        _logger.info(f"this is the {self.contract_wizard_id.installment_lines_ids}")
+        # print(f"this is the {self.contract_wizard_id.installment_lines_ids}")

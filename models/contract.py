@@ -732,6 +732,9 @@ class InstallmentLines(models.Model):
         ('done','Done'),
     ],default="not_yet_due")
 
+
+    payment_ids = fields.Many2many('account.payment')
+
     @api.depends('amount', 'paid_amount')
     def _compute_remaining_amount(self):
         for rec in self:
@@ -885,10 +888,6 @@ class StatementLines(models.Model):
 
             except Exception as e:
                 print(f"Error creating activity for line {line.id}: {str(e)}")
-
-
-
-
 
 
 
